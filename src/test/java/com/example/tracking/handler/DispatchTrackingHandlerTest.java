@@ -11,6 +11,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.concurrent.ExecutionException;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
@@ -24,9 +26,10 @@ class DispatchTrackingHandlerTest {
     private TrackingService trackingService;
 
     @Test
-    void listen() {
-        DispatchPreparing message = TestEventData.createDispatchPreparingEvent();
-        dispatchTrackingHandler.listen(message);
-        Mockito.verify(trackingService, Mockito.times(1)).process(message);
+    void listen_Success() throws Exception {
+        DispatchPreparing event = TestEventData.createDispatchPreparingEvent();
+        dispatchTrackingHandler.listen(event);
+        Mockito.verify(trackingService, Mockito.times(1)).process(event);
     }
+
 }
